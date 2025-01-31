@@ -10,7 +10,7 @@ Route::get('/tes', [PatientController::class, 'index']);
 Route::get('/get-filters', [FilterController::class, 'getFilters']);
 Route::get('/get-patients', [PatientController::class, 'getPatients']);
 
-Route::get('/rsi', [PasienRSIController::class, 'index']);
+Route::get('/', [PasienRSIController::class, 'index']);
 Route::get('/get-filtersRSI', [FilterRSIController::class, 'ambilDataFilter']);
 route::get('/get-patientsRSI', [PasienRSIController::class, 'ambilDataPasien']);
 

@@ -23,6 +23,9 @@ class PasienRSIController extends Controller
         
         $query = PendaftaranRSI::query();
 
+        // TAMBAHKAN FILTER UNTUK NO PENDAFTARAN DIAWALI "RJ" 
+        $query->where('no_pendaftaran', 'like', 'RJ%'); // <--- Ini filter utamanya
+
         if (!empty($request->tanggal)) {
             $query->whereRaw("DATE(tgl_pendaftaran) = ?", [$request->tanggal]);
         }
@@ -54,11 +57,19 @@ class PasienRSIController extends Controller
         // $patients = $query->get();  // Ambil data pasien
 
         $patients = $query
+            ->select([
+                'no_pendaftaran',
+                'tgl_pendaftaran',
+                'pasien_id',
+                'ruangan_id',
+                'pegawai_id',
+                'create_loginpemakai_id'
+            ])
             ->with([
-                'poliklinik', 
-                'dokter', 
-                'pasieniki',
-                'pegawai.petugasrsi'
+                'poliklinik:ruangan_id,ruangan_nama', 
+                'dokter:pegawai_id,nama_pegawai', 
+                'pasieniki:pasien_id,nama_pasien',
+                'pegawai.petugasrsi:pegawai_id,nama_pegawai'
             ])->paginate(20);  // Load related data
         // dump($patients->toSql());
 

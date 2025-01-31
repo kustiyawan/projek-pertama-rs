@@ -39,7 +39,7 @@
             <div class="col-md-3">
                 <label for="filter_via">Pendaftaran Via:</label>
                 <select id="filter_via" class="form-control">
-                    <option value="">Semua</option>
+                    <option value="3">Semua</option>
                     <option value="2">Petugas</option>
                     <option value="1">APM</option>
                 </select>

@@ -13,19 +13,49 @@ $(document).ready(function () {
 
     function loadFilters() {
 
-        $.get('/get-filtersRSI', function (data) {
+        const filterPilih = {
+            poliklinik: $('#filter_poliklinik').val(),
+            dokter: $('#filter_dokter').val(),
+            pegawai: $('#filter_pegawai').val(),
+            via: $('#filter_via').val()
+        };
+
+        // $.get('/get-filtersRSI', function (data) {
+        //     if (data.poliklinik) {
+        //         // console.log(data.poliklinik)
+        //         populateSelect('#filter_poliklinik', data.poliklinik);
+        //     }
+        //     if (data.dokter) {
+        //         // console.log(data.dokter)
+        //         populateSelect('#filter_dokter', data.dokter);
+        //     }
+        //     if (data.petugas_pendaftaran) {
+        //         // console.log(data.petugas_pendaftaran)
+        //         populateSelect('#filter_pegawai', data.petugas_pendaftaran);
+        //     }
+        // });
+
+        $.get('/get-filtersRSI', filterPilih, function (data) {
             if (data.poliklinik) {
-                console.log(data.poliklinik)
+                // console.log(data.poliklinik)
                 populateSelect('#filter_poliklinik', data.poliklinik);
             }
             if (data.dokter) {
-                console.log(data.dokter)
+                // console.log(data.dokter)
                 populateSelect('#filter_dokter', data.dokter);
+                
             }
-            if (data.petugas_pendaftaran) {
-                console.log(data.petugas_pendaftaran)
-                populateSelect('#filter_pegawai', data.petugas_pendaftaran);
+            if ('#filter_via' == 2 || '#filter_via' == 3) {
+
+                if (data.petugas_pendaftaran) {
+                    // console.log(data.petugas_pendaftaran)
+                    populateSelect('#filter_pegawai', data.petugas_pendaftaran);
+                }
             }
+            // if (data.petugas_pendaftaran) {
+            //     // console.log(data.petugas_pendaftaran)
+            //     populateSelect('#filter_pegawai', data.petugas_pendaftaran);
+            // }
         });
     }
 
@@ -117,8 +147,10 @@ $(document).ready(function () {
     function populateSelect(selector, options) {
         $(selector).html('<option value="">Semua</option>');
         options.forEach(option => {
+            const pilihPetugas = option.pegawai_id;
+            if (selector )
             // $(selector).append(`<option value="${option.id}">${option.name}</option>`);
-            $(selector).append(`<option value="${option.ruangan_id || option.pegawai_id}">${option.ruangan_nama || option.nama_pegawai}</option>`);
+            $(selector).append(`<option value="${option.ruangan_id || pilihPetugas}">${option.ruangan_nama || option.nama_pegawai}</option>`);
         });
     }
 });
